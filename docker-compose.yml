@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+    ports:
+      - 80:5000
+    restart: unless-stopped
+  redis:
+    container_name: local-redis
+    image: redis/redis-stack
+    ports: 
+      - 6379:6379
+    restart: on-failure
+  
+

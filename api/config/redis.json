@@ -1,0 +1,8 @@
+{
+    "redis_settings":
+    {
+        "host":"local-redis",
+        "port":6379,
+        "db":0
+    }
+}
