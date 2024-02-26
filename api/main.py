@@ -50,8 +50,7 @@ def create_app() -> FastAPI:
     
     @app.get('/test')
     async def testing():
-        
-        return {"Hostname basic":socket.gethostname(),"Hostname ENV":os.environ.get("$HOSTNAME_ENV")}
+        return {"Hostname":socket.gethostname()}
     
     @routerv1.get('/game/{game_name}', response_model=Union[VGMEntry, dict])
     def get_game_api(game_name: Annotated[str, Path()]):
