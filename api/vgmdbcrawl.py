@@ -224,7 +224,6 @@ class VGMDBData:
                 return True
         return False
             
-    #TODO: Set cache based off of attributes and not some passed-in data dictionary
     def set_cached_vals(self, redis_obj: redis.Redis, timelimit: datetime.timedelta = 30) -> bool:
         try:
             data = {
