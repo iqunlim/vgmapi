@@ -15,6 +15,7 @@ def example_vgmdb_to_json():
     yield json.load(json_yield)
     json_yield.close()
     
+# currently unused    
 @pytest.fixture
 def example_db_to_json():
 

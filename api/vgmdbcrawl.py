@@ -225,7 +225,7 @@ class VGMDBData:
         return False
             
     #TODO: Set cache based off of attributes and not some passed-in data dictionary
-    def set_cached_vals(self, redis_obj: redis.Redis, timelimit: datetime.timedelta = 30) -> None:
+    def set_cached_vals(self, redis_obj: redis.Redis, timelimit: datetime.timedelta = 30) -> bool:
         try:
             data = {
                 "Title":self.title,
@@ -241,10 +241,13 @@ class VGMDBData:
         except RedisError:
             logger.error("Redis error in setting the cache:")
             logger.error("data object: %s", str(data))
+            return False
         except Exception:
             logger.exception("Miscellaneous error in set_cached_values")
+            return False
         else:
             logger.info("Set cache for %s", self.catalog)
+            return True
             
 class VGMDBPydantic(BaseModel):
     Title: str
