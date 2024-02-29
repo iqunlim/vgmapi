@@ -1,7 +1,6 @@
 # User-defined extras go here.
 .vscode
 /other
-/logs
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

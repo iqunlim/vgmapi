@@ -156,9 +156,6 @@ def test_get_game_info(fastapi_client: TestClient, example_vgmdb_to_json):
     
     response = fastapi_client.get("/api/vgmdb/65091", params={"convert":1})
     assert response.status_code == 200
-    #do i really need the entire api return here...
-    #i did this because it feeds some temp data, I probably should
-    #work on having it as a post request as well to add rating, descript, extras
     assert response.json() == {
     "rating": 0,
     "description": "Temp",

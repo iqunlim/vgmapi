@@ -275,7 +275,6 @@ class VGMDataForVGMAPI(VGMDBData):
     def as_db_entry(self, rating:int, description:str = None, year_listened: int = None, **kwargs) -> VGMEntry:
         
         #Convert list of list of dictionaries to [Track(), Track(),]
-        #probaby convertable to a list comprehension but it would be pretty unreadable and dense.
         list_of_tracks_for_vgmentry = []
         for key, value in self.tracks.items():
             current_disc = key
