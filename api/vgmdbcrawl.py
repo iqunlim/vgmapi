@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, status
 from bs4 import BeautifulSoup
 from pydantic import BaseModel
 from redis.exceptions import RedisError
+from urllib.error import HTTPError
 
 import redis
 import requests
@@ -54,27 +55,33 @@ class VGMDBData:
         if content:
             try:
                 self.soup = BeautifulSoup(content, 'html.parser')
-            except Exception:
-                raise Exception
+            except TypeError:
+                raise TypeError("Custom content failed to parse")
+        
         else:
             try:
                 temp = requests.get(f'{VGMDB_ALBUM_URL}{self.catalog}').content
             except Exception:
                 temp = f"<h1>ERROR on page {VGMDB_ALBUM_URL}{self.catalog}</h1>"
-                logger.error("Error on request of page %s", self.catalog)
+                logger.exception("Error on request of page %s", self.catalog)
             
             try:
                 self.soup = BeautifulSoup(temp, 'html.parser')
-            except Exception:
+            except TypeError:
                 logger.exception("Error in VGMPageData.as_soup")
-                self.soup = BeautifulSoup("<h1>Error</h1>", 'html.parser')
+                self.soup = BeautifulSoup(f"<h1>ERROR on page {VGMDB_ALBUM_URL}{self.catalog}</h1>", 'html.parser')
             
     @cached_property
     def title(self):
-        value = next(self.soup.find('h1').stripped_strings)
-        if value == "System Message":
-            return "Not Found"
-        return value
+        try:
+            value = next(self.soup.find('h1').stripped_strings)
+            if value == "System Message":
+                return "Not Found"
+            return value
+        except AttributeError:
+            logger.exception("Exception in creation of title in VGMDBData")
+            return None
+            
     
     @cached_property
     def game(self):
@@ -84,7 +91,8 @@ class VGMDBData:
         else:
             #Hacky, TODO: Better way to do this than getting it from /product/
             if self.title:
-                return self.title.lstrip(" Original Soundtrack")
+                var = self.title
+                return re.sub(" Original Soundtrack","",var)
             else:
                 return None
     
@@ -94,7 +102,7 @@ class VGMDBData:
         try:
             album_table = self.soup.find("table", id='album_infobit_large').find_all('tr')
         except AttributeError:
-            logger.error("album table not found")
+            logger.info("album table not found, skipping")
         else:
             for row in album_table:
                 if row.td is not None and not row.td.get('class', None):
@@ -111,7 +119,7 @@ class VGMDBData:
             if tracklist is None:
                 raise AttributeError
         except AttributeError:
-            logger.error("album table not found")
+            logger.error("Track table not found")
         else:
             #setting up the titles list for later and
             #checking to make sure that it doesnt iterate to the next
@@ -192,27 +200,29 @@ class VGMDBData:
     
     @cached_property
     def notes(self):
-        raise NotImplementedError
+        raise NotImplementedError("Notes have not been added")
         
     def get_cached_vals(self, redis_obj: redis.Redis) -> bool:
         # Returns true if cached loaded else return false
-        cached_values = redis_obj.json().get(f'game:{self.catalog}')
-        if cached_values:
-            self.soup = BeautifulSoup('<h1>Cached VGMDB Data</h1>', 'html.parser') #Some default.
-            self.title = cached_values.get('Title', None)
-            self.game = cached_values.get('Game', None)
-            self.albuminfo = cached_values.get('AlbumInfo', None)
-            self.tracks = cached_values.get('Tracks', None)
-            self.covers = cached_values.get('Covers', None)
-            self.credits = cached_values.get('Credits', None)
-            #self.notes = None #Not implemented yet
-            
-            info_str = f"Returned cached values for game:{self.catalog}"
-            logger.info(info_str)
-            
-            return True
+        try:
+            cached_values = redis_obj.json().get(f'game:{self.catalog}')
+        except RedisError:
+            logger.error("Redis error in setting the cache for %s", self.catalog)
         else:
-            return False
+            if cached_values:
+                self.soup = BeautifulSoup('<h1>Cached VGMDB Data</h1>', 'html.parser') #Some default.
+                self.title = cached_values.get('Title', None)
+                self.game = cached_values.get('Game', None)
+                self.albuminfo = cached_values.get('AlbumInfo', None)
+                self.tracks = cached_values.get('Tracks', None)
+                self.covers = cached_values.get('Covers', None)
+                self.credits = cached_values.get('Credits', None)
+                #self.notes = None #Not implemented yet
+                
+                logger.info("Returned cached values for game: %s", self.catalog)
+                
+                return True
+        return False
             
     #TODO: Set cache based off of attributes and not some passed-in data dictionary
     def set_cached_vals(self, redis_obj: redis.Redis, timelimit: datetime.timedelta = 30) -> None:
@@ -278,7 +288,7 @@ class VGMDataForVGMAPI(VGMDBData):
             rating=rating,
             description=description,
             year_listened=int(datetime.date.today().strftime("%Y")) if year_listened is None else year_listened,
-            catalog_num=self.catalog,
+            catalog_num=self.albuminfo.get("Catalog Number", "Error"),
             game = self.game,
             img = self.covers[0],
             tracks = list_of_tracks_for_vgmentry,

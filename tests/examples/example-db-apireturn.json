@@ -1,0 +1,107 @@
+{
+    "year_listened": 2024,
+    "game": "NieR: Automata",
+    "catalog_num": "SQEX-10589~91",
+    "rating": 10,
+    "img": "https://medium-media.vgm.io/albums/19/65091/65091-1c5e756fbddb.png",
+    "description": "\"Hello This is my description of nier automata it is very nice\"",
+    "tracks": [
+      {
+        "disc": "Disc 3 [SQEX-10591]",
+        "track_id": 0,
+        "title": "Rebirth & Hope",
+        "duration": "0:37"
+      },
+      {
+        "disc": "Disc 3 [SQEX-10591]",
+        "track_id": 1,
+        "title": "War & War",
+        "duration": "4:32"
+      },
+      {
+        "disc": "Disc 3 [SQEX-10591]",
+        "track_id": 2,
+        "title": "Crumbling Lies - Front",
+        "duration": "3:26"
+      },
+      {
+        "disc": "Disc 3 [SQEX-10591]",
+        "track_id": 3,
+        "title": "Widespread Illness",
+        "duration": "3:18"
+      },
+      {
+        "disc": "Disc 3 [SQEX-10591]",
+        "track_id": 4,
+        "title": "Fortress of Lies",
+        "duration": "2:49"
+      },
+      {
+        "disc": "Disc 3 [SQEX-10591]",
+        "track_id": 5,
+        "title": "Vague Hope - Spring Rain",
+        "duration": "4:40"
+      },
+      {
+        "disc": "Disc 3 [SQEX-10591]",
+        "track_id": 6,
+        "title": "Song of the Ancients - Atonement",
+        "duration": "5:09"
+      },
+      {
+        "disc": "Disc 3 [SQEX-10591]",
+        "track_id": 7,
+        "title": "Blissful Death",
+        "duration": "2:36"
+      },
+      {
+        "disc": "Disc 3 [SQEX-10591]",
+        "track_id": 8,
+        "title": "Emil - Despair",
+        "duration": "4:46"
+      },
+      {
+        "disc": "Disc 3 [SQEX-10591]",
+        "track_id": 9,
+        "title": "Faltering Prayer - Starry Sky",
+        "duration": "3:44"
+      },
+      {
+        "disc": "Disc 3 [SQEX-10591]",
+        "track_id": 10,
+        "title": "Alien Manifestation",
+        "duration": "6:27"
+      },
+      {
+        "disc": "Disc 3 [SQEX-10591]",
+        "track_id": 11,
+        "title": "The Tower",
+        "duration": "7:43"
+      },
+      {
+        "disc": "Disc 3 [SQEX-10591]",
+        "track_id": 12,
+        "title": "Bipolar Nightmare",
+        "duration": "5:00"
+      },
+      {
+        "disc": "Disc 3 [SQEX-10591]",
+        "track_id": 13,
+        "title": "The Sound of the End",
+        "duration": "5:26"
+      },
+      {
+        "disc": "Disc 3 [SQEX-10591]",
+        "track_id": 14,
+        "title": "Weight of the World Nouveau - FR Version",
+        "duration": "5:47"
+      },
+      {
+        "disc": "Disc 3 [SQEX-10591]",
+        "track_id": 15,
+        "title": "Weight of the World the End of YoRHa",
+        "duration": "5:39"
+      }
+    ],
+    "extras": null
+  }
