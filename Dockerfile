@@ -4,7 +4,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1  
 
 RUN apk update && \
-        apk add musl-dev libpq-dev gcc && \
+        apk add musl-dev libpq-dev gcc python3-dev musl-dev linux-headers && \
         adduser -DS python && \
         addgroup python
 

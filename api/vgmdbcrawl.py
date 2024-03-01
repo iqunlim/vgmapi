@@ -9,6 +9,7 @@ import requests
 import logging
 import re
 import datetime
+import os
 
 from datetime import timedelta
 from typing import Union
@@ -307,7 +308,7 @@ def get_game_info(catalog: str, convert: int = 0, cache_time_in_minutes=30, noca
     vgmdata = get_vgmdbdata(catalog)
     redis_obj = get_redis()
     
-    if nocache == 0 and redis_obj is not None:
+    if nocache == 0 and redis_obj is not None and os.environ.get("API_NOCACHE", None) != "1":
         is_cached = vgmdata.get_cached_vals(redis_obj)
         if not is_cached:
             logger.info("No cache found for %s", catalog)
