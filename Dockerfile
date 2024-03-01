@@ -23,9 +23,13 @@ RUN --mount=type=cache,target=/api/.cache/pip \
 
 EXPOSE 5000
 
-FROM base AS prod
-
 ENV API_NOCACHE 1
+
+FROM base as dev 
+
+CMD ["python3", "-m", "uvicorn", "api.main:create_app", "--host", "0.0.0.0", "--port", "5000", "--factory", "--reload"]
+
+FROM base AS prod
 
 COPY --chown=python:python ./api ./api
 

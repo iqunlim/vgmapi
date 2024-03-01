@@ -1,9 +1,17 @@
 version: "3.9"
 services:
   fastapi:
-    image: iqunlim/vgmsite-fastapi
     environment:
       - API_NOCACHE=0
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    volumes:
+    #hot reloading of fastapi app
+    - type: bind
+      source: ./api
+      target: /api/api
     ports:
       - 80:5000
     restart: unless-stopped
