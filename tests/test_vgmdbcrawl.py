@@ -33,16 +33,15 @@ def fake_redis() -> fakeredis.FakeRedis:
 
 def test_fetch_vals_from_webpage(vgmapi_obj):
     
+    vgmapi_obj.fetch_vals_from_webpage()
+    assert isinstance(vgmapi_obj.soup, BeautifulSoup)
+    assert vgmapi_obj.title == "NieR:Automata Original Soundtrack"
+    
     with open('./tests/examples/example-vgmdb-page.html') as file:
         vgmapi_obj.fetch_vals_from_webpage(file)
         
     assert isinstance(vgmapi_obj.soup, BeautifulSoup)
     delattr(vgmapi_obj,"soup")
-    
-        
-    vgmapi_obj.fetch_vals_from_webpage()
-    assert isinstance(vgmapi_obj.soup, BeautifulSoup)
-    assert vgmapi_obj.title == "NieR:Automata Original Soundtrack"
             
     with pytest.raises(TypeError) as excinfo:
         vgmapi_obj.fetch_vals_from_webpage({"Non":"Parsable"})
