@@ -1,6 +1,8 @@
 version: "3.9"
 services:
   fastapi:
+    environment:
+      - API_NOCACHE=0
     build:
       context: .
       dockerfile: Dockerfile

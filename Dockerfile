@@ -25,6 +25,8 @@ EXPOSE 5000
 
 FROM base AS prod
 
+ENV API_NOCACHE 1
+
 COPY --chown=python:python ./api ./api
 
 CMD ["python3", "-m", "uvicorn", "api.main:create_app", "--host", "0.0.0.0", "--port", "5000", "--factory"]

@@ -12,7 +12,10 @@ def get_redis(config_file: str=CONFIG_FILE) -> redis.Redis:
     """
     returns a redis.Redis object if the server can be connected to from the config file settings,
     if it cannot be connected to or if there is some other error it will return None.
+    If local ENV API_NOCACHE=1 then it will return None. Used in the dockerfiles
     """
+    if os.environ.get("API_NOCACHE", "0") == "1":
+        return None
     
     with open(os.path.dirname(os.path.realpath(__file__)) + CONFIG_FILE) as config:
         settings = json.load(config)['redis_settings']
