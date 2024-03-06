@@ -139,7 +139,7 @@ class VGMDBData:
                 last_row = -1
                 for row in disc.find_all('tr'):
                     values = [val for val in row.stripped_strings]
-                    # TODO: Handle subtables? I'll have to redo this entire pull because vgmdb pulls dont make much sense
+                    # TODO: Handle subtables?
                     if len(values) >= 3:
                         tracklist_info.append({"title":values[1], "duration":values[2]})
                         last_row += 1

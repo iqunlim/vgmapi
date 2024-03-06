@@ -17,7 +17,7 @@ def get_redis(config_file: str=CONFIG_FILE) -> redis.Redis:
     if os.environ.get("API_NOCACHE", "0") == "1":
         return None
     
-    with open(os.path.dirname(os.path.realpath(__file__)) + CONFIG_FILE) as config:
+    with open(os.path.dirname(os.path.realpath(__file__)) + config_file) as config:
         settings = json.load(config)['redis_settings']
     try:
         return_obj = redis.Redis(**settings)

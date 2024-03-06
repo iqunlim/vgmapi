@@ -226,8 +226,6 @@ class DynamoDBVGM:
         else:
             try:
                 if "Items" in response:
-                    myup = str(response)
-                    logger.info("Test: %s", myup)
                     data = VGMEntry(**VGMEntry.convert_pksk_to_real_vals(response["Items"][0]))
                 else:
                     return {}
