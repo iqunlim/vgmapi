@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   fastapi:
-    image: iqunlim/vgmsite-fastapi
+    image: iqunlim/vgmsite-fastapi:latest
     environment:
       - API_NOCACHE=0
     ports:
