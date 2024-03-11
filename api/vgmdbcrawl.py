@@ -187,6 +187,8 @@ class VGMDBData:
                 # TODO: Modify the existing soup object with various methods for normalization? I don't know if that would be faster....
                 credits_list = []
                 for td in row.find_all('td'):
+                    
+                    #check out tr class = maincred
                     if td.find('span', attrs={'lang':'en'}):
                         credits_list.extend([all.string for all in td.find_all('span', lang='en')])
                     #TODO: Handle different languages. There are some albums which have 0 other languages and this will need to be accounted for
@@ -226,7 +228,7 @@ class VGMDBData:
         return False
             
     #TODO: Set cache based off of attributes and not some passed-in data dictionary
-    def set_cached_vals(self, redis_obj: redis.Redis, timelimit: datetime.timedelta = 30) -> bool:
+    def set_cached_vals(self, redis_obj: redis.Redis, timelimit: int = 30) -> bool:
         try:
             data = {
                 "Title":self.title,
