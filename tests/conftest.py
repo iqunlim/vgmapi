@@ -11,7 +11,7 @@ class MockVGMDBRequest():
 
     @property
     def content(self):
-        if not exists('./tests/examples/example-vgmdb-page.html'):
+        '''if not exists('./tests/examples/example-vgmdb-page.html'):
             file = urlopen('https://vgmdb.net/album/65091')
             html_bytes = file.read()
             html = html_bytes.decode("utf-8")
@@ -19,12 +19,12 @@ class MockVGMDBRequest():
             f.writelines(html)
             f.close()
             return html
-        else:
-            content = ""
-            with open('./tests/examples/example-vgmdb-page.html') as file:
-                for line in file:
-                    content += line
-            return content
+        else:'''
+        content = ""
+        with open('./tests/examples/example-vgmdb-page.html') as file:
+            for line in file:
+                content += line
+        return content
            
 @pytest.fixture(autouse=True)
 def no_requests_get(monkeypatch):

@@ -2,8 +2,6 @@
 .vscode
 /other
 /logs
-tests/examples/example-vgmdb-page.html
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
